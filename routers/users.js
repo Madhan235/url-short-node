@@ -67,13 +67,13 @@ let transporter = nodemailer.createTransport({
     service:"gmail",
     auth:{
         user:"msouljar@gmail.com",
-        pass:process.env.password
+        pass:yhqilsstocvicqoc
     },
 });
 
 let mailDetails = {
     from:"msouljar@gmail.com",
-    to:`${user.email}`,
+    to:`${email}`,
     subject:"Reset Password Link",
     text:`${link}`
 }
