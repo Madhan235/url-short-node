@@ -82,6 +82,7 @@ transporter.sendMail(mailDetails,function(err){
     } else{
         console.log("email sent successfully")
     }
+    res.send("email sent successfully")
 })
 
 })
