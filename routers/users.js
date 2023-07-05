@@ -7,10 +7,11 @@ const router = express.Router();
 
 router.post("/signup", async (req,res)=>{
 try {
+const {email,password} = req.body
+
     if(email === null || password === null){
         return res.status(400).json({data:{error:"Invalid details"}})
             }
-const {email,password} = req.body
     const user = await findUser(email);
     if(user){
         return res.status(400).json({data:{error:"Email already Registered"}})
