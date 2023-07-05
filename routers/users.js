@@ -30,13 +30,24 @@ res.status(200).json({data:hashedUser})
 
 router.post("/login",async (req,res)=>{
 try {
+const {email,password} = req.body
     if(email === "" || password === ""){
         return res.status(400).json({data:{error:"Invalid details"}})
             }
-
-
+const user = await findUser(email)
+if(!user) {
+    return res.status(400).json({data:{error:"Invalid email, New user ! Please Signup"}})
+}
+const validatePass = 
+await bcrypt.compare(password,user.password)
+if(!validatePass){
+    return res.status(400).json({data:{error:"Invalid password"}})
+}
+const token = generatejwtToken(user._id)
+res.status(200).json({data:{token:token}})
 } catch (error) {
-    
+    console.log(error)
+    res.status(400).json({data:{error:"code error"}})
 }
 })
 
