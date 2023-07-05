@@ -13,6 +13,6 @@ export function  findUser(email){
     .findOne({email:email})
 }
 
-export function genrateJwtToken(id){
+export function generateJwtToken(id){
 return jwt.sign({id},process.env.secretkey,{expiresIn:"10d"})
 }

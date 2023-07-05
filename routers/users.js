@@ -1,5 +1,5 @@
 import express from "express";
-import { addUser, findUser } from "../logics/users.js";
+import { addUser, findUser, generateJwtToken } from "../logics/users.js";
 import bcrypt from "bcrypt";
 
 
@@ -35,7 +35,6 @@ const {email,password} = req.body
         return res.status(400).json({data:{error:"Invalid details"}})
             }
 const user = await findUser(email)
-res.status(200).json({data:user});
 if(!user) {
     return res.status(400).json({data:{error:"Invalid email, New user ! Please Signup"}})
 }
@@ -44,8 +43,8 @@ await bcrypt.compare(password,user.password)
 if(!validatePass){
     return res.status(400).json({data:{error:"Invalid password"}})
 }
-const token = generatejwtToken(user._id)
-res.status(200).json({data:{token:token}})
+const token = generateJwtToken(user._id)
+res.status(200).json({data:{user:user,token:token}})
 } catch (error) {
     console.log(error)
     res.status(400).json({data:{error:"code error"}})
