@@ -7,11 +7,15 @@ const router = express.Router();
 
 router.post("/signup", async (req,res)=>{
 try {
+    if(email === null || password === null){
+        return res.status(400).json({data:{error:"Invalid details"}})
+            }
 const {email,password} = req.body
     const user = await findUser(email);
     if(user){
         return res.status(400).json({data:{error:"Email already Registered"}})
     }
+    
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password,salt);
     const hashedUser = {...req.body,password:hashedPassword}
