@@ -29,7 +29,15 @@ res.status(200).json({data:hashedUser})
 })
 
 router.post("/login",async (req,res)=>{
+try {
+    if(email === "" || password === ""){
+        return res.status(400).json({data:{error:"Invalid details"}})
+            }
 
+
+} catch (error) {
+    
+}
 })
 
 export const userRouter = router;
