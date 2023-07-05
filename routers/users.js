@@ -80,10 +80,11 @@ let mailDetails = {
 transporter.sendMail(mailDetails,function(err){
     if(err){
         console.log(err)
+        res.send(err)
     } else{
         console.log("email sent successfully")
     }
-    res.send("email sent successfully")
+
 })
 
 })
