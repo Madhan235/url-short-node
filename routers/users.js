@@ -2,6 +2,7 @@ import express from "express";
 import { addUser, findUser, generateForgetToken, generateJwtToken } from "../logics/users.js";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
+import dotenv from 'dotenv';
 
 const router = express.Router();
 
@@ -66,7 +67,7 @@ let transporter = nodemailer.createTransport({
     service:"gmail",
     auth:{
         user:"msouljar@gmail.com",
-        pass:"yhqilsstocvicqoc"
+        pass:process.env.password
     },
 });
 
