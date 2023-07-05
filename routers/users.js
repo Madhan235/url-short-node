@@ -9,7 +9,7 @@ router.post("/signup", async (req,res)=>{
 try {
 const {email,password} = req.body
 
-    if(email === null || password === null){
+    if(email === "" || password === ""){
         return res.status(400).json({data:{error:"Invalid details"}})
             }
     const user = await findUser(email);
