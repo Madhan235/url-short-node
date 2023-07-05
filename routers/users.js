@@ -1,7 +1,7 @@
 import express from "express";
-import { addUser, findUser, generateJwtToken } from "../logics/users.js";
+import { addUser, findUser, generateForgetToken, generateJwtToken } from "../logics/users.js";
 import bcrypt from "bcrypt";
-
+import nodemailer from "nodemailer";
 
 const router = express.Router();
 
@@ -50,5 +50,42 @@ res.status(200).json({data:{user:user,token:token}})
     res.status(400).json({data:{error:"code error"}})
 }
 })
+
+router.post("/forget",async function(req,res){
+    const {email} = req.body;
+const user = findUser(email)
+if(!user){
+    
+    return res.status(404).json({data:{error:"email not registered"}})
+}
+const token =  generateForgetToken(user._id,user.password)
+const link = `https://madhan235-url-short-node.onrender.com
+/users/reset${user._id}/${token}`
+
+let transporter = nodemailer.createTransport({
+    service:"gmail",
+    auth:{
+        user:"msouljar@gmail.com",
+        pass:"yhqilsstocvicqoc"
+    },
+});
+
+let mailDetails = {
+    from:"msouljar@gmail.com",
+    to:`${user.email}`,
+    subject:"Reset Password Link",
+    text:`${link}`
+}
+transporter.sendMail(mailDetails,function(err){
+    if(err){
+        console.log(err)
+    } else{
+        console.log("email sent successfully")
+    }
+})
+
+})
+
+// router.get('/reset',)
 
 export const userRouter = router;
