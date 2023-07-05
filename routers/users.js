@@ -35,6 +35,7 @@ const {email,password} = req.body
         return res.status(400).json({data:{error:"Invalid details"}})
             }
 const user = await findUser(email)
+console.log(user)
 if(!user) {
     return res.status(400).json({data:{error:"Invalid email, New user ! Please Signup"}})
 }
