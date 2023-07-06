@@ -1,5 +1,5 @@
 import express from "express";
-import { addUser, findUser, generateForgetToken, generateJwtToken } from "../logics/users.js";
+import { addUser, findUser, findUserbyId, generateForgetToken, generateJwtToken } from "../logics/users.js";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 import dotenv from 'dotenv';
@@ -90,7 +90,9 @@ transporter.sendMail(mailDetails,function(err){
 
 router.get('/reset/:id/:token', async (req,res)=>{
     const {id , token} = req.params;
-    res.send({id:id,token:token})
+    const user = findUserbyId(id)
+    res.send(user)
+
 })
 
 export const userRouter = router;
