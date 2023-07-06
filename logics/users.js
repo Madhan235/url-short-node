@@ -7,10 +7,10 @@ return client.db("bwd45")
 .insertOne(req)
 }
 
-export function findUser(email){
+export function findUser(userEmail){
     return client.db("bwd45")
     .collection("users")
-    .findOne({"email":email})
+    .findOne({email:userEmail})
 }
 
 export function generateJwtToken(id){
