@@ -128,10 +128,10 @@ const salt = await bcrypt.genSalt(10);
 const newhashedPassword = await bcrypt.hash(password,salt)
 const newhashedUser = {...req.body,password:newhashedPassword}
     const result = await updatePassword(email,newhashedUser)
-    
+    const updatedUser = await findUser(email)
     const token = generateJwtToken(email)
     
-    res.status(200).json({data:{newUser:result,
+    res.status(200).json({data:{updatedUser:updatedUser,
         message:" password successfully changed",token:token}})
 
     } catch (error) {
