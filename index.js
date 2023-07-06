@@ -4,6 +4,7 @@ import {userRouter}  from "./routers/users.js";
 import cors from "cors";
 import { isAuthenticated } from "./routers/auth.js";
 import { urlRouter } from "./routers/urlShortner.js";
+import nodemailer from "nodemailer";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(cors());
 app.use("/users",userRouter)
 app.use("/url",isAuthenticated,urlRouter)
 
+ 
 
 
 
