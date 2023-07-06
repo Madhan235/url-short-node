@@ -82,7 +82,7 @@ transporter.sendMail(mailDetails,function(err){
         res.status(400).json({error:err})
     } else{
         console.log("email sent successfully")
-        res.status(200).json({data:{id:user.id,token:token,message:"email successfully sent"}})
+        res.status(200).json({data:{id:user._id,token:token,message:"email successfully sent"}})
     }
 
 })
