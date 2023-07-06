@@ -1,5 +1,5 @@
 import express from "express";
-import { addUser, findUser, findUserbyId, generateForgetToken, generateJwtToken } from "../logics/users.js";
+import { addUser, findUser, generateForgetToken, generateJwtToken, updatePassword } from "../logics/users.js";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 import dotenv from 'dotenv';
@@ -60,7 +60,7 @@ if(!user){
     return res.status(404).json({data:{error:"email not registered"}})
 }
 const token =  generateForgetToken(user._id,user.password);
-const link = `http://localhost:3000/reset/${user._id}/${token}`
+const link = `http://localhost:3000/reset/${user.email}`
 
 let transporter = nodemailer.createTransport({
     service:"gmail",
@@ -89,27 +89,54 @@ transporter.sendMail(mailDetails,function(err){
 
 })
 
-router.get('/reset/:id/:token', async (req,res,next)=>{
-   try {
-    const {id , token} = req.params;
-    const user = await findUserbyId(id)
-    if(!user){
-        res.status(404).json({data:{error:"Invalid user_id"}})
+// router.get('/reset/:id/:token', async (req,res,next)=>{
+//    try {
+//     const {id , token} = req.params;
+//     const user = await findUserbyId(id)
+//     if(!user){
+//         res.status(404).json({data:{error:"Invalid user_id"}})
+//     }
+//     if(!token){
+//         return res.status(404).json({data:{error:"Invalid token"}})}
+//     jwt.verify(token,process.env.secretkey)
+//      next();
+//    } catch (error) {
+//     console.log(error)
+//     res.send({error:error})
+//    } 
+// })
+
+router.post("/reset",async (req,res)=>{
+
+    try {
+        const {email,password,confirm} = req.body
+        const user = await loginUser(email);
+    
+
+if(password === "" ||  confirm === ""){
+  return res.status(400).json({data:{error:"invalid details"}})  
+}
+if(password !== confirm) {
+  return res.status(400).json({data:{error:"password doesnot match"}})  
+
+}
+
+const salt = await bcrypt.genSalt(10);
+
+const newhashedPassword = await bcrypt.hash(password,salt)
+const newhashedUser = {...req.body,password:newhashedPassword}
+    const result = await updatePassword(email,newhashedUser)
+    
+    const token = generateJwtToken(email)
+    
+    res.status(200).json({data:{newUser:result,
+        message:" password successfully changed",token:token}})
+
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({data:{error:"code error"}})
     }
-    if(!token){
-        return res.status(404).json({data:{error:"Invalid token"}})}
-    jwt.verify(token,process.env.secretkey)
-     next();
-   } catch (error) {
-    console.log(error)
-    res.send({error:error})
-   } 
 })
 
-router.post('/reset/:id/:token', async (req,res)=>{
-
-const {id, token} = req.params;
-res.send({id:id, token:token})
-})
 
 export const userRouter = router;
