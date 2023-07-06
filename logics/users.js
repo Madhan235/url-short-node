@@ -1,4 +1,4 @@
-import { client, objectId} from "../db.js";
+import { client, ObjectId} from "../db.js";
 import jwt from "jsonwebtoken";
 
 export function  addUser(req){
@@ -24,5 +24,5 @@ return jwt.sign({id,password},process.env.secretkey,{expiresIn:"5m"})
 export function findUserbyId(id){
     return client.db("bwd45")
     .collection("users")
-    .findOne({id_: objectId(id)})
+    .findOne({id_: ObjectId(id)})
 }

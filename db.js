@@ -9,5 +9,5 @@ async function createConnection(){
 console.log("mongodb server connected")
 return client; 
 }
-export var objectId = obj.ObjectId;
+export var ObjectId = obj.ObjectId;
 export const client = await createConnection();
