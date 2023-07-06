@@ -110,8 +110,10 @@ router.post("/reset",async (req,res)=>{
 
     try {
         const {email,password,confirm} = req.body
-        const user = await loginUser(email);
-    
+        const user = await findUser(email);
+    if(!user){
+        res.status(404).json({data:{error:"user not found"}})
+    }
 
 if(password === "" ||  confirm === ""){
   return res.status(400).json({data:{error:"invalid details"}})  
