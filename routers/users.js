@@ -3,6 +3,7 @@ import { addUser, findUser, findUserbyId, generateForgetToken, generateJwtToken 
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 import dotenv from 'dotenv';
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -88,16 +89,27 @@ transporter.sendMail(mailDetails,function(err){
 
 })
 
-router.get('/reset/:id/:token', async (req,res)=>{
+router.get('/reset/:id/:token', async (req,res,next)=>{
    try {
     const {id , token} = req.params;
     const user = await findUserbyId(id)
-    res.send(user)
+    if(!user){
+        res.status(404).json({data:{error:"Invalid user_id"}})
+    }
+    if(!token){
+        return res.status(404).json({data:{error:"Invalid token"}})}
+    jwt.verify(token,process.env.secretkey)
+     next();
    } catch (error) {
     console.log(error)
     res.send({error:error})
    } 
+})
 
+router.post('/reset/:id/:token', async (req,res)=>{
+
+const {id, token} = req.params;
+res.send({id:id, token:token})
 })
 
 export const userRouter = router;
