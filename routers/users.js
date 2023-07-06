@@ -106,7 +106,7 @@ transporter.sendMail(mailDetails,function(err){
 //    } 
 // })
 
-router.post("/reset",async (req,res)=>{
+router.post("/reset/:id/:token",async (req,res)=>{
 
     try {
         const {email,password,confirm} = req.body
