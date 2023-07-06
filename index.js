@@ -4,6 +4,8 @@ import {userRouter}  from "./routers/users.js";
 import cors from "cors";
 import { isAuthenticated } from "./routers/auth.js";
 import { urlRouter } from "./routers/urlShortner.js";
+import nodemailer from "nodemailer";
+import { findUserbyId } from "./logics/users.js";
 
 dotenv.config();
 
@@ -13,7 +15,11 @@ app.use(cors());
 app.use("/users",userRouter)
 app.use("/url",isAuthenticated,urlRouter)
 
- 
+ const userid ='64a3f5322262c4fe0ecaf0f3';
+ const user = await findUserbyId(userid);
+ console.log(user);
+
+
 
 
 

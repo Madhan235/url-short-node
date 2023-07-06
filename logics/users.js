@@ -24,5 +24,5 @@ return jwt.sign({id,password},process.env.secretkey,{expiresIn:"5m"})
 export function findUserbyId(id){
     return client.db("bwd45")
     .collection("users")
-    .findOne({id_: new ObjectId(id)})
+    .findOne({_id: new ObjectId(id)})
 }

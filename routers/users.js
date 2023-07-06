@@ -91,8 +91,8 @@ transporter.sendMail(mailDetails,function(err){
 router.get('/reset/:id/:token', async (req,res)=>{
    try {
     const {id , token} = req.params;
-    const userReset = await findUserbyId(id)
-    res.send(userReset)
+    const user = await findUserbyId(id)
+    res.send(user)
    } catch (error) {
     console.log(error)
     res.send({error:error})
