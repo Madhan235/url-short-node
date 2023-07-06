@@ -55,11 +55,12 @@ res.status(200).json({data:{user:user,token:token}})
 router.post("/forget",async function(req,res){
     const {email} = req.body;
 const user = findUser(email)
+res.send(user)
 if(!user){
     
     return res.status(404).json({data:{error:"email not registered"}})
 }
-const token =  generateForgetToken(user._id,user.password)
+const token =  generateForgetToken(user._id) + user.password;
 const link = `https://madhan235-url-short-node.onrender.com/users/reset/${user._id}/${token}`
 
 let transporter = nodemailer.createTransport({

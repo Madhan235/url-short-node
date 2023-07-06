@@ -17,6 +17,6 @@ export function generateJwtToken(id){
 return jwt.sign({id},process.env.secretkey,{expiresIn:"10d"})
 }
 
-export function generateForgetToken(id,password){
-return jwt.sign({id,password},process.env.secretkey,{expiresIn:"5m"})
+export function generateForgetToken(id){
+return jwt.sign({id},process.env.secretkey,{expiresIn:"5m"})
 }
