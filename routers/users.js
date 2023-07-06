@@ -90,7 +90,7 @@ transporter.sendMail(mailDetails,function(err){
 
 router.get('/reset/:id/:token', async (req,res)=>{
     const {id , token} = req.params;
-    res.send(user)
+    res.send({id:id,token:token})
 })
 
 export const userRouter = router;
