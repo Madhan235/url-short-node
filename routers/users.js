@@ -54,8 +54,9 @@ res.status(200).json({data:{user:user,token:token}})
 
 router.post("/forget",async function(req,res){
     const {email} = req.body;
-const user = findUser(email)
+const user = await findUser(email)
 res.send(user)
+console.log(user)
 if(!user){
     
     return res.status(404).json({data:{error:"email not registered"}})
