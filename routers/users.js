@@ -134,7 +134,7 @@ const newhashedUser = {...req.body,password:newhashedPassword}
 
     } catch (error) {
         console.log(error)
-        res.status(400).json({data:{error:error}})
+        res.status(400).json({data:{error:error.message}})
     }
 })
 
