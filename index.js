@@ -15,7 +15,4 @@ app.use("/url",isAuthenticated,urlRouter)
 
  
 
-
-
-
 app.listen( process.env.PORT,()=>console.log("localhost running on process.env.Port"))

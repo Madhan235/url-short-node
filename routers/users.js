@@ -101,8 +101,9 @@ router.post(`/reset/:id/:token`,async (req,res)=>{
           
         const {password,confirm} = req.body
     const user = await findUserbyId(id);
-    const secret = process.env.secretkey + user.password ;
-    const verifyToken = jwt.verify(token,secret)  
+    const secret = process.env.secretkey + user.password;
+    const verifyToken = jwt.verify(token,secret) 
+    res.send(verifyToken) 
     if(!user){
         return res.status(404).json({data:{error:"Invalid Id"}})
     }
