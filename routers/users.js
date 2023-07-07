@@ -96,9 +96,12 @@ transporter.sendMail(mailDetails,function(err){
 
 
  
-router.post(`/reset/:id`,async (req,res)=>{
+router.post(`/reset/:id/:token`,async (req,res,next)=>{
     try {
-        const id = req.params.id;         
+        const id = req.params.id; 
+        const token = req.params.token;
+        jwt.verify(token,process.env.secretkey)  
+        next();      
         const {password,confirm} = req.body
     const user = await findUserbyId(id);
     if(!user){
