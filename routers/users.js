@@ -88,9 +88,7 @@ transporter.sendMail(mailDetails,function(err){
 
    } catch (error) {
     res.send(error.message);
-   }
-   
-    
+   }    
 })
 
 router.post(`/reset/:id/:token`,async (req,res)=>{
@@ -103,7 +101,6 @@ router.post(`/reset/:id/:token`,async (req,res)=>{
     const user = await findUserbyId(id);
     const secret = process.env.secretkey + user.password;
     const verifyToken = jwt.verify(token,secret) 
-    res.send(verifyToken) 
     if(!user){
         return res.status(404).json({data:{error:"Invalid Id"}})
     }
