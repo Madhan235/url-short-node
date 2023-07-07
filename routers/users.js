@@ -89,22 +89,7 @@ transporter.sendMail(mailDetails,function(err){
 
 })
 
-// router.get('/reset/:id/:token', async (req,res,next)=>{
-//    try {
-//     const {id , token} = req.params;
-//     const user = await findUserbyId(id)
-//     if(!user){
-//         res.status(404).json({data:{error:"Invalid user_id"}})
-//     }
-//     if(!token){
-//         return res.status(404).json({data:{error:"Invalid token"}})}
-//     jwt.verify(token,process.env.secretkey)
-//      next();
-//    } catch (error) {
-//     console.log(error)
-//     res.send({error:error})
-//    } 
-// })
+ 
 
 router.post("/reset/:id/:token",async (req,res)=>{
     try {
