@@ -2,7 +2,6 @@ import express from "express";
 import { addUser, findUser, findUserbyId, generateForgetToken, generateJwtToken, updatePassword } from "../logics/users.js";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
-import dotenv from 'dotenv';
 import jwt from "jsonwebtoken";
 
 const router = express.Router();
@@ -66,7 +65,7 @@ let transporter = nodemailer.createTransport({
     service:"gmail",
     auth:{
         user:"msouljar@gmail.com",
-        pass:"yhqilsstocvicqoc"
+        pass:"yhqilsstocvicqoc",
     },
 });
 
@@ -90,7 +89,6 @@ transporter.sendMail(mailDetails,function(err){
 })
 
  
-
 router.post("/reset/:id/:token",async (req,res)=>{
     try {
     const {id, token} = req.params;
