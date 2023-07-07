@@ -96,18 +96,13 @@ transporter.sendMail(mailDetails,function(err){
 
 
  
-router.post("/reset/:id/:token",async (req,res,next)=>{
+router.post("/reset/:id",async (req,res,next)=>{
     try {
-    const {id, token} = req.params;
+    const {id} = req.params;
     const user = await findUserbyId(id);
     if(!user){
         return res.status(404).json({data:{error:"Invalid Id"}})
     }
-    if(!token){
-        return res.status(404).json({data:{error:"Invalid token"}})
-    }
-    jwt.verify(token,process.env.secretkey)
-        next();
         const {password,confirm} = req.body
       
 if(password === "" ||  confirm === ""){
