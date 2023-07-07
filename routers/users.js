@@ -53,6 +53,7 @@ res.status(200).json({data:{user:user,token:token}})
 })
 
 router.post("/forget",async function(req,res){
+   try {
     const {email} = req.body;
 const user = await findUser(email)
 if(!user){
@@ -78,15 +79,21 @@ let mailDetails = {
 transporter.sendMail(mailDetails,function(err){
     if(err){
         console.log(err)
-        res.status(400).json({error:err})
+       return  res.send(err.message)
     } else{
         console.log("email sent successfully")
         res.status(200).json({data:{id:user._id,token:token,message:"email successfully sent"}})
     }
-
 })
 
+   } catch (error) {
+    res.send(error.message);
+   }
+   
+    
 })
+
+
 
  
 router.post("/reset/:id/:token",async (req,res)=>{
