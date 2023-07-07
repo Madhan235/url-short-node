@@ -96,7 +96,7 @@ transporter.sendMail(mailDetails,function(err){
 
 
  
-router.post("/reset/:id",async (req,res,next)=>{
+router.post(`/reset/id`,async (req,res,next)=>{
     try {
     const {id} = req.params;
     if(id){res.send(id)};
