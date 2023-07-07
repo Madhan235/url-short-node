@@ -113,6 +113,11 @@ router.post("/reset/:id/:token",async (req,res)=>{
     if(!user){
         return res.status(404).json({data:{error:"Invalid Id"}})
     }
+    if(!token){
+        return res.status(404).json({data:{error:"Invalid token"}})
+    }
+    jwt.verify(token,process.env.secretkey)
+        next();
         const {password,confirm} = req.body
       
 if(password === "" ||  confirm === ""){
