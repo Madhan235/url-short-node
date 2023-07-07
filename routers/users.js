@@ -59,7 +59,7 @@ const user = await findUser(email)
 if(!user){
     return res.status(404).json({data:{error:"email not registered"}})
 }
-const token =  generateForgetToken(user._id,user.password);
+const token =  generateForgetToken(user.password);
 const link = `http://localhost:3000/reset/${user._id}/${token}`
 
 let transporter = nodemailer.createTransport({
@@ -103,6 +103,7 @@ router.post("/reset/:id",async (req,res,next)=>{
     if(!user){
         return res.status(404).json({data:{error:"Invalid Id"}})
     }
+
         const {password,confirm} = req.body
       
 if(password === "" ||  confirm === ""){
@@ -118,7 +119,7 @@ const salt = await bcrypt.genSalt(10);
 const newhashedPassword = await bcrypt.hash(password,salt)
 const newhashedUser = {...req.body,password:newhashedPassword}
     const result = await updatePassword(id,newhashedUser)
-    const updatedUser = await  findUserbyId(id)
+    const updatedUser = await findUserbyId(id)
     const ReGentoken = generateJwtToken(id)
     
     res.status(200).json({data:{updatedUser:updatedUser,
