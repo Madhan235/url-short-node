@@ -99,6 +99,7 @@ transporter.sendMail(mailDetails,function(err){
 router.post("/reset/:id",async (req,res,next)=>{
     try {
     const {id} = req.params;
+    if(id){res.send(id)};
     const user = await findUserbyId(id);
     if(!user){
         return res.status(404).json({data:{error:"Invalid Id"}})
