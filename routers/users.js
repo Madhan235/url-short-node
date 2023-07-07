@@ -48,7 +48,7 @@ const token = generateJwtToken(user._id)
 res.status(200).json({data:{user:user,token:token}})
 } catch (error) {
     console.log(error)
-    res.status(400).json({data:{error:"code error"}})
+    res.status(400).json({data:{error:error.message}})
 }
 })
 
