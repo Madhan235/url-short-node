@@ -98,14 +98,14 @@ transporter.sendMail(mailDetails,function(err){
  
 router.post(`/reset/:id`,async (req,res)=>{
     try {
-    const userId = req.params.id;
-    res.send(userId);
-    const user = await findUserbyId(userId);
+        const id = req.params.id;         
+        const {password,confirm} = req.body
+    const user = await findUserbyId(id);
     if(!user){
         return res.status(404).json({data:{error:"Invalid Id"}})
     }
 
-        const {password,confirm} = req.body
+        
       
 if(password === "" ||  confirm === ""){
   return res.status(400).json({data:{error:"invalid details"}})  
@@ -119,9 +119,9 @@ const salt = await bcrypt.genSalt(10);
 
 const newhashedPassword = await bcrypt.hash(password,salt)
 const newhashedUser = {...req.body,password:newhashedPassword}
-    const result = await updatePassword(userId,newhashedUser)
-    const updatedUser = await findUserbyId(userId)
-    const ReGentoken = generateJwtToken(userId)
+    const result = await updatePassword(id,newhashedUser)
+    const updatedUser = await findUserbyId(id)
+    const ReGentoken = generateJwtToken(id)
     
     res.status(200).json({data:{updatedUser:updatedUser,
         message:" password successfully changed",token:ReGentoken}})
