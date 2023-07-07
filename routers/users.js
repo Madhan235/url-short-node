@@ -113,13 +113,13 @@ if(password !== confirm) {
 }
 const salt = await bcrypt.genSalt(10);
 const newhashedPassword = await bcrypt.hash(password,salt)
-const newhashedUser = {...req.body,password:newhashedPassword}
-    const result = await updatePassword(id,newhashedUser)
-    const updatedUser = await findUserbyId(id)
-    const ReGentoken = generateJwtToken(id)
+// const newhashedUser = {...req.body,password:newhashedPassword}
+    const result = await updatePassword(id,newhashedPassword)
     
-    res.status(200).json({data:{updatedUser:updatedUser,
-        message:" password successfully changed",token:ReGentoken}})
+     
+    
+    res.status(200).json({data:{result:result,
+        message:"password successfully changed"}})
 
     } catch (error) {
         console.log(error)
