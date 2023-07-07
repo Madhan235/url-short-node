@@ -96,9 +96,9 @@ transporter.sendMail(mailDetails,function(err){
 
 
  
-router.post(`/reset/id`,async (req,res,next)=>{
+router.post(`/reset/:id`,async (req,res)=>{
     try {
-    const {id} = req.params;
+    const id = req.params;
     if(id){res.send(id)};
     const user = await findUserbyId(id);
     if(!user){
