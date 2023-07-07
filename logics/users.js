@@ -30,6 +30,6 @@ export function findUserbyId(id){
 export function updatePassword(userEmail,newpassword){
     return client.db("bwd45")
     .collection("users")
-    .findOneAndUpdate({email:userEmail},{$set:{password:newpassword}})
+    .findOneAndUpdate({_id:new ObjectId(id)},{$set:{password:newpassword}})
     }
     

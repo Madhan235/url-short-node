@@ -1,5 +1,5 @@
 import express from "express";
-import { addUser, findUser, generateForgetToken, generateJwtToken, updatePassword } from "../logics/users.js";
+import { addUser, findUser, findUserbyId, generateForgetToken, generateJwtToken, updatePassword } from "../logics/users.js";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 import dotenv from 'dotenv';
@@ -107,14 +107,14 @@ transporter.sendMail(mailDetails,function(err){
 // })
 
 router.post("/reset/:id/:token",async (req,res)=>{
-
     try {
-        const {email,password,confirm} = req.body
-        const user = await findUser(email);
+    const {id, token} = req.params;
+    const user = await findUserbyId(id);
     if(!user){
-        res.status(404).json({data:{error:"user not found"}})
+        return res.status(404).json({data:{error:"Invalid Id"}})
     }
-
+        const {password,confirm} = req.body
+      
 if(password === "" ||  confirm === ""){
   return res.status(400).json({data:{error:"invalid details"}})  
 }
@@ -127,12 +127,12 @@ const salt = await bcrypt.genSalt(10);
 
 const newhashedPassword = await bcrypt.hash(password,salt)
 const newhashedUser = {...req.body,password:newhashedPassword}
-    const result = await updatePassword(email,newhashedUser)
-    const updatedUser = await findUser(email)
-    const token = generateJwtToken(email)
+    const result = await updatePassword(id,newhashedUser)
+    const updatedUser = await  findUserbyId(id)
+    const ReGentoken = generateJwtToken(id)
     
     res.status(200).json({data:{updatedUser:updatedUser,
-        message:" password successfully changed",token:token}})
+        message:" password successfully changed",token:ReGentoken}})
 
     } catch (error) {
         console.log(error)
