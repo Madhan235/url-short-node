@@ -19,6 +19,7 @@
     "mongodb": "^5.6.0",
     "mongoose": "^7.3.2",
     "nodemailer": "^6.9.3",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "shortid": "^2.2.16"
   }
 }

@@ -3,7 +3,7 @@ import { addUser, findUser, findUserbyId, generateForgetToken, generateJwtToken,
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
-
+import shortid from "shortid";
 const router = express.Router();
 
 router.post("/signup", async (req,res)=>{
@@ -133,7 +133,9 @@ router.post("/shortner",async (req,res)=>{
         if(!url){
           return res.status(400).json({data:{error:"no url"}})
         }
-        res.status(200).json({data:url});
+       const shorturl =  shortid.generate(url)
+
+        res.status(200).json({data:shorturl});
 
     
     } catch (error) {
