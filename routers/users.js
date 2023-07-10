@@ -129,7 +129,7 @@ const newhashedPassword = await bcrypt.hash(password,salt)
 
 router.post("/shortner", async (req,res)=>{
     try {
-        const {longUrl} = req.body
+        const {longUrl} = await req.body
     res.status(200).json({data:longUrl});
     
     } catch (error) {
