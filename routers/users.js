@@ -127,10 +127,14 @@ const newhashedPassword = await bcrypt.hash(password,salt)
     }
 })
 
-router.post("/shortner", async (req,res)=>{
+router.post("/shortner",async (req,res)=>{
     try {
-        const {longUrl} = await req.body
-    res.status(200).json({data:longUrl});
+        const {url} = req.body
+        if(!url){
+          return res.status(400).json({data:{error:"no url"}})
+        }
+        res.status(200).json({data:url});
+
     
     } catch (error) {
         res.send(error.message)
