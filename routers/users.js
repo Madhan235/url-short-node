@@ -128,8 +128,12 @@ const newhashedPassword = await bcrypt.hash(password,salt)
 })
 
 router.post("/shortner",(req,res)=>{
-    const {longUrl} = req.body
+    try {
+        const {longUrl} = req.body
     res.send(longUrl);
+    } catch (error) {
+        res.send(error.message)
+    }
     })
 
 export const userRouter = router;
