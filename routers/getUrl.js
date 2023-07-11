@@ -2,9 +2,9 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/url",async ()=>{
+router.get("/url",async (req,res)=>{
     try {
-  await res.send("working fine")
+   res.send("working fine")
         
     } catch (error) {
         res.send(error.message)
