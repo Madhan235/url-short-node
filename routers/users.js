@@ -60,7 +60,7 @@ if(!user){
     return res.status(404).json({data:{error:"email not registered"}})
 }
 const token =  generateForgetToken(user._id,user.password);
-const link = `http://localhost:3000/reset/${user._id}/${token}`
+const link = `https://mellifluous-lebkuchen-9bef5e.netlify.app/${user._id}/${token}`
 
 let transporter = nodemailer.createTransport({
     service:"gmail",
