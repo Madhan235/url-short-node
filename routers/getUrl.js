@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get("/url",async ()=>{
     try {
-   res.send("working fine")
+  await res.send("working fine")
         
     } catch (error) {
         res.send(error.message)
