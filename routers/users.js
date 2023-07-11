@@ -133,9 +133,9 @@ router.post("/shortner",async (req,res)=>{
         if(!url){
           return res.status(400).json({data:{error:"no url"}})
         }
-    //    const shorturl =  shortid.generate(url)
+       const shorturl =  shortid.generate(url)
 
-        res.status(200).json({data:{url:url}});
+        res.status(200).json({data:{url:url,shorturl:shorturl}});
 
     
     } catch (error) {
