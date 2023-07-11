@@ -135,7 +135,7 @@ router.post("/shortner",async (req,res)=>{
         }
        const shorturl =  shortid.generate(url)
 
-        res.status(200).json({data:{long:url,short:shorturl}});
+        res.status(200).json({data:[{long:url,short:shorturl}]});
 
     
     } catch (error) {
