@@ -34,3 +34,9 @@ export function updatePassword(id,newpassword){
     .findOneAndUpdate({_id: new ObjectId(id)},{$set:{password:newpassword}})
     }
     
+    export function addUrl(req){
+        return client.db("bwd45")
+        .collection("url")
+        .insertOne(req)
+    }
+    

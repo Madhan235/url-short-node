@@ -1,5 +1,5 @@
 import express from "express";
-import { addUser, findUser, findUserbyId, generateForgetToken, generateJwtToken, updatePassword } from "../logics/users.js";
+import { addUrl, addUser, findUser, findUserbyId, generateForgetToken, generateJwtToken, updatePassword } from "../logics/users.js";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
@@ -133,10 +133,10 @@ router.post("/shortner",async (req,res)=>{
         if(!url){
           return res.status(400).json({data:{error:"no url"}})
         }
-       const shorturl =  shortid.generate(url)
-
-        res.status(200).json({data:{url:url,shorturl:shorturl}});
-
+       const shortUrl =  shortid.generate(url)
+   const newUrl = {longUrl:url,shortUrl:shortUrl}
+         const dataInfo = await addUrl(newUrl);
+         res.status(200).json({data:{longUrl:url,shortUrl:shortUrl,dataInfo:dataInfo}});
     
     } catch (error) {
         res.send(error.message)
