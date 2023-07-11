@@ -40,3 +40,8 @@ export function updatePassword(id,newpassword){
         .insertOne(req)
     }
     
+    export function getUrlData(){
+        return client.db("bwd45")
+        .collection("url")
+        .find().toArray()
+    }
