@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/url",async (req,res)=>{
     try {
    const urlData = await getUrlData();
-   res.send(urlData);
+   res.status(200).json({data:urlData});
         
     } catch (error) {
         res.send(error.message)
